@@ -28,7 +28,7 @@ genuine day-to-day travel companion — not just a booking form.
 | Timeline | Destination Explorer |
 |----------|-----------------------|
 | ![Timeline](timeline.JPG) | ![Explorer](Explorer.JPG) |
-| Analytics & Achievements | Theme Gallery |
+| Analytics       | Achievements|
 |---------------------------|----------------|
 | ![Analytics](Analytics.JPG) | ![Achievements](analytic.JPG) |
 
