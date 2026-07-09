@@ -24,12 +24,12 @@ genuine day-to-day travel companion — not just a booking form.
 | ![Currency](currencyconvertor.JPG) | ![Hotels](hotel.JPG) |
 | World Map | Travel Journal |
 |-----------|----------------|
-| ![Map](map.JPG) | ![Journal](journal.JPG) |
+| ![Map](worldmap.JPG) | ![Journal](journal.JPG) |
 | Timeline | Destination Explorer |
 |----------|-----------------------|
 | ![Timeline](timeline.JPG) | ![Explorer](Explorer.JPG) |
 | Analytics       | Achievements|
-|---------------------------|----------------|
+|---------------------|----------------|
 | ![Analytics](Analytics.JPG) | ![Achievements](analytic.JPG) |
 
 ## 👩‍💻 Developer
