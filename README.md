@@ -3,6 +3,9 @@ A premium travel planning platform that turns trip planning into a full
 operating system — budgets, packing, itineraries, journaling, and 
 destination discovery, all in one dashboard.
 
+## 🌐 Live Demo
+🔗https://ayeshacodes25.github.io/VoyageX/
+
 ## 🌟 About the Project
 VoyageX lets travelers plan every part of a trip in one place instead of 
 juggling spreadsheets, notes apps, and booking sites. Add a trip and 
