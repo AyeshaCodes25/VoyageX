@@ -15,22 +15,22 @@ genuine day-to-day travel companion — not just a booking form.
 ## 📸 Screenshots
 | Dashboard | Trip Planner |
 |-----------|--------------|
-| ![Dashboard](dashboard.JPG) | ![Trip Planner](trip-planner.JPG) |
+| ![Dashboard](dashboard.JPG) | ![Trip Planner](tripplanner.JPG) |
 | Budget Planner | Smart Packing |
 |----------------|---------------|
-| ![Budget](budget.JPG) | ![Packing](packing.JPG) |
+| ![Budget](budgetplanner.JPG) | ![Packing](packing.JPG) |
 | Currency Converter | Hotel Wishlist |
 |---------------------|----------------|
-| ![Currency](currency.JPG) | ![Hotels](hotels.JPG) |
+| ![Currency](currencyconvertor.JPG) | ![Hotels](hotel.JPG) |
 | World Map | Travel Journal |
 |-----------|----------------|
 | ![Map](map.JPG) | ![Journal](journal.JPG) |
 | Timeline | Destination Explorer |
 |----------|-----------------------|
-| ![Timeline](timeline.JPG) | ![Explorer](explorer.JPG) |
+| ![Timeline](timeline.JPG) | ![Explorer](Explorer.JPG) |
 | Analytics & Achievements | Theme Gallery |
 |---------------------------|----------------|
-| ![Analytics](analytics.JPG) | ![Themes](themes.JPG) |
+| ![Analytics](Analytics.JPG) | ![Achievements](analytic.JPG) |
 
 ## 👩‍💻 Developer
 - Ayesha Amjad — Full-Stack Developer (Front-End Focused) & Digital Marketing Specialist
