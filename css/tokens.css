@@ -1,0 +1,278 @@
+/* ============================================================
+   VOYAGEX DESIGN TOKENS
+   Identity: Departure board / boarding pass.
+   Split-flap numerals, ticket-stub dividers, instrument-panel accents.
+   ============================================================ */
+
+:root {
+  /* ---- Type ---- */
+  --font-display: 'Big Shoulders', 'Oswald', sans-serif;   /* condensed, departure-board */
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace; /* flight data, timestamps */
+
+  --tracking-board: 0.08em;
+
+  /* ---- Radii ---- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.24), 0 8px 24px -8px rgba(0,0,0,0.4);
+  --shadow-lift: 0 2px 4px rgba(0,0,0,0.3), 0 16px 40px -12px rgba(0,0,0,0.55);
+
+  /* ---- Motion ---- */
+  --ease-flap: cubic-bezier(0.45, 0, 0.15, 1);
+  --dur-fast: 140ms;
+  --dur-med: 320ms;
+
+  /* ---- Layout ---- */
+  --nav-w: 84px;
+  --nav-w-open: 240px;
+  --content-max: 1280px;
+}
+
+/* ============================================================
+   THEME: MIDNIGHT (default) — control-tower at night
+   ============================================================ */
+:root,
+[data-theme="midnight"] {
+  --bg: #0B0E14;
+  --bg-elevated: #12161F;
+  --bg-card: #161B26;
+  --bg-card-hover: #1B2130;
+  --border: #262D3D;
+  --border-strong: #37415A;
+
+  --text-primary: #EDEFF4;
+  --text-secondary: #9AA3B8;
+  --text-muted: #5C6478;
+
+  --accent-amber: #E2A83D;    /* split-flap amber */
+  --accent-amber-dim: #8A6A2A;
+  --accent-teal: #2FB8A6;     /* aviation teal */
+  --accent-rose: #E0637A;     /* alert / used-budget */
+  --accent-blue: #6FA8DC;     /* sky / water */
+
+  --stamp-ink: #E2A83D;
+}
+
+/* ============================================================
+   THEME: SAND — desert runway, daytime
+   ============================================================ */
+[data-theme="sand"] {
+  --bg: #F5EFE2;
+  --bg-elevated: #FBF8F1;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F1EAD9;
+  --border: #E2D7BE;
+  --border-strong: #C9B98F;
+
+  --text-primary: #23201A;
+  --text-secondary: #635A47;
+  --text-muted: #9A9078;
+
+  --accent-amber: #C17A2C;
+  --accent-amber-dim: #E4C08F;
+  --accent-teal: #1E7D74;
+  --accent-rose: #C24C5C;
+  --accent-blue: #3E7CA6;
+
+  --stamp-ink: #C17A2C;
+}
+
+/* ============================================================
+   THEME: OCEAN — deep-water instrument panel
+   ============================================================ */
+[data-theme="ocean"] {
+  --bg: #06141F;
+  --bg-elevated: #0B1F2E;
+  --bg-card: #0F2837;
+  --bg-card-hover: #143242;
+  --border: #1E3A4C;
+  --border-strong: #2E5468;
+
+  --text-primary: #E8F3F7;
+  --text-secondary: #8FB4C4;
+  --text-muted: #52798A;
+
+  --accent-amber: #F2B84B;
+  --accent-amber-dim: #8A6A2A;
+  --accent-teal: #3ED6C5;
+  --accent-rose: #E86B8A;
+  --accent-blue: #4FA8E0;
+
+  --stamp-ink: #3ED6C5;
+}
+
+/* ============================================================
+   THEME: SUNSET — departure-lounge golden hour
+   ============================================================ */
+[data-theme="sunset"] {
+  --bg: #1A0F12;
+  --bg-elevated: #241419;
+  --bg-card: #2E1920;
+  --bg-card-hover: #3A2128;
+  --border: #4A2A32;
+  --border-strong: #6B3B45;
+
+  --text-primary: #FBEDE6;
+  --text-secondary: #D4A79B;
+  --text-muted: #8C6259;
+
+  --accent-amber: #FF9E5E;
+  --accent-amber-dim: #B96A38;
+  --accent-teal: #4FB8A8;
+  --accent-rose: #FF6B7A;
+  --accent-blue: #E88BC0;
+
+  --stamp-ink: #FF9E5E;
+}
+
+/* ============================================================
+   THEME: FOREST — mountain-trail basecamp
+   ============================================================ */
+[data-theme="forest"] {
+  --bg: #10160F;
+  --bg-elevated: #161F14;
+  --bg-card: #1C2A19;
+  --bg-card-hover: #24351F;
+  --border: #2E4029;
+  --border-strong: #43593B;
+
+  --text-primary: #EAF2E6;
+  --text-secondary: #A7BF9E;
+  --text-muted: #6B8060;
+
+  --accent-amber: #E0B24A;
+  --accent-amber-dim: #8A6A2A;
+  --accent-teal: #5FBF8A;
+  --accent-rose: #D9765C;
+  --accent-blue: #6FA0A8;
+
+  --stamp-ink: #5FBF8A;
+}
+
+/* ============================================================
+   THEME: AURORA — polar night, borealis accents
+   ============================================================ */
+[data-theme="aurora"] {
+  --bg: #0A0E1A;
+  --bg-elevated: #101528;
+  --bg-card: #151B32;
+  --bg-card-hover: #1C2440;
+  --border: #2A3355;
+  --border-strong: #3E4A78;
+
+  --text-primary: #EAEDFA;
+  --text-secondary: #A6ADD4;
+  --text-muted: #616A96;
+
+  --accent-amber: #E0A83D;
+  --accent-amber-dim: #8A6A2A;
+  --accent-teal: #4FE0B8;
+  --accent-rose: #E06BC2;
+  --accent-blue: #7C8CF0;
+
+  --stamp-ink: #4FE0B8;
+}
+
+/* ============================================================
+   THEME: OCEAN — deep sea, ship's instrument panel
+   ============================================================ */
+[data-theme="ocean"] {
+  --bg: #071B26;
+  --bg-elevated: #0C2532;
+  --bg-card: #10303F;
+  --bg-card-hover: #143A4C;
+  --border: #1E4657;
+  --border-strong: #2F6178;
+
+  --text-primary: #E8F4F7;
+  --text-secondary: #8FB6C4;
+  --text-muted: #557C8A;
+
+  --accent-amber: #3FC1C9;
+  --accent-amber-dim: #2A7E84;
+  --accent-teal: #5FD0A8;
+  --accent-rose: #E0637A;
+  --accent-blue: #4A9FD8;
+
+  --stamp-ink: #3FC1C9;
+}
+
+/* ============================================================
+   THEME: SUNSET — golden hour on the tarmac
+   ============================================================ */
+[data-theme="sunset"] {
+  --bg: #1E1015;
+  --bg-elevated: #2A161C;
+  --bg-card: #351C24;
+  --bg-card-hover: #40232C;
+  --border: #4A2B33;
+  --border-strong: #6B3B47;
+
+  --text-primary: #FBEDE8;
+  --text-secondary: #D2A199;
+  --text-muted: #8C6A66;
+
+  --accent-amber: #F2994A;
+  --accent-amber-dim: #A6672E;
+  --accent-teal: #E85D75;
+  --accent-rose: #F25C54;
+  --accent-blue: #C97BBE;
+
+  --stamp-ink: #F2994A;
+}
+
+/* ============================================================
+   THEME: FOREST — mountain-lodge check-in
+   ============================================================ */
+[data-theme="forest"] {
+  --bg: #10180F;
+  --bg-elevated: #172114;
+  --bg-card: #1E2B1A;
+  --bg-card-hover: #263520;
+  --border: #33472B;
+  --border-strong: #47623A;
+
+  --text-primary: #EAF1E4;
+  --text-secondary: #A6BC98;
+  --text-muted: #6C8362;
+
+  --accent-amber: #C9A227;
+  --accent-amber-dim: #8A6E1B;
+  --accent-teal: #5FA679;
+  --accent-rose: #C46B5C;
+  --accent-blue: #6E9E8E;
+
+  --stamp-ink: #C9A227;
+}
+
+/* ============================================================
+   THEME: AURORA — polar night, northern lights
+   ============================================================ */
+[data-theme="aurora"] {
+  --bg: #0D0F1F;
+  --bg-elevated: #12152B;
+  --bg-card: #171B37;
+  --bg-card-hover: #1D2242;
+  --border: #2A3057;
+  --border-strong: #3D4678;
+
+  --text-primary: #EDEFFA;
+  --text-secondary: #A6ACD6;
+  --text-muted: #656C9C;
+
+  --accent-amber: #7FE0C4;
+  --accent-amber-dim: #3F8F79;
+  --accent-teal: #9C7FE0;
+  --accent-rose: #E07FB0;
+  --accent-blue: #7FA8E0;
+
+  --stamp-ink: #7FE0C4;
+}
+
+/* Utility: shared across themes */
+.mono { font-family: var(--font-mono); }

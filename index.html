@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoyageX — Travel Operating System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <button class="mobile-toggle" id="mobileToggle" onclick="toggleMobileNav()" aria-label="Toggle menu">☰</button>
+  <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileNav(false)"></div>
+
+  <!-- ============ SIDE NAV ============ -->
+  <nav class="sidenav" id="sidenav">
+    <div class="brand">
+      <div class="brand-mark">VX</div>
+      <div class="brand-name">VoyageX</div>
+    </div>
+
+    <div class="theme-switcher">
+      <div class="theme-dot active" data-theme="midnight" title="Midnight" onclick="setTheme('midnight')"></div>
+      <div class="theme-dot" data-theme="sand" title="Sand" onclick="setTheme('sand')"></div>
+      <div class="theme-dot" data-theme="ocean" title="Ocean" onclick="setTheme('ocean')"></div>
+      <div class="theme-dot" data-theme="sunset" title="Sunset" onclick="setTheme('sunset')"></div>
+      <div class="theme-dot" data-theme="forest" title="Forest" onclick="setTheme('forest')"></div>
+      <div class="theme-dot" data-theme="aurora" title="Aurora" onclick="setTheme('aurora')"></div>
+    </div>
+
+    <ul class="navlist">
+      <li><a href="#" class="navlink active" data-view="dashboard"><span class="ic">&#9776;</span><span>Dashboard</span></a></li>
+      <li><a href="#" class="navlink" data-view="trips"><span class="ic">&#9992;</span><span>Trip Planner</span></a></li>
+      <li><a href="#" class="navlink" data-view="budget"><span class="ic">&#128176;</span><span>Budget</span></a></li>
+      <li><a href="#" class="navlink" data-view="packing"><span class="ic">&#129522;</span><span>Packing</span></a></li>
+      <li><a href="#" class="navlink" data-view="hotels"><span class="ic">&#127976;</span><span>Hotels</span></a></li>
+      <li><a href="#" class="navlink" data-view="currency"><span class="ic">&#128176;</span><span>Currency</span></a></li>
+      <li><a href="#" class="navlink" data-view="map"><span class="ic">&#127760;</span><span>World Map</span></a></li>
+      <li><a href="#" class="navlink" data-view="journal"><span class="ic">&#128248;</span><span>Journal</span></a></li>
+      <li><a href="#" class="navlink" data-view="timeline"><span class="ic">&#128337;</span><span>Timeline</span></a></li>
+      <li><a href="#" class="navlink" data-view="explorer"><span class="ic">&#128269;</span><span>Explorer</span></a></li>
+      <li><a href="#" class="navlink" data-view="analytics"><span class="ic">&#128202;</span><span>Analytics</span></a></li>
+    </ul>
+
+    <div class="nav-footer">
+      <button class="btn btn-sm" style="width:100%; margin-bottom:6px;" onclick="downloadBackup()">⬇ Backup data</button>
+      <input type="file" id="restoreFileInput" accept=".json" style="display:none" onchange="restoreBackup(this)">
+      <button class="btn btn-sm btn-ghost" style="width:100%;" onclick="document.getElementById('restoreFileInput').click()">⬆ Restore backup</button>
+      <div class="navlink" style="opacity:.6; font-size:11px; font-family:var(--font-mono); margin-top:8px;">v0.2 &middot; Phase 2</div>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="view active" id="view-dashboard">
+      <div class="page-head">
+        <div>
+          <div class="greeting" id="greetingText"><span class="wave">&#9992;&#65039;</span> Good Evening, Ayesha</div>
+          <div class="subline" id="dateSub">—</div>
+        </div>
+        <div class="date-chip" id="clockChip">--:--:--</div>
+      </div>
+
+      <div class="grid" id="dashboardGrid">
+        <!-- populated by dashboard.js -->
+      </div>
+
+      <div class="stub-divider">
+        <span class="stub-label">Upcoming</span>
+        <span class="stub-line"></span>
+        <span class="stub-dot"></span>
+      </div>
+
+      <div class="grid" id="upcomingTripsGrid">
+        <!-- populated by dashboard.js -->
+      </div>
+    </section>
+
+    <!-- ================= TRIPS ================= -->
+    <section class="view" id="view-trips">
+      <div class="page-head">
+        <div>
+          <div class="section-title">Trip Planner</div>
+          <div class="section-desc">Every trip, one card. Destination, dates, budget, checklist.</div>
+        </div>
+        <button class="btn btn-primary" onclick="openTripModal()">+ New Trip</button>
+      </div>
+      <div class="grid" id="tripsGrid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"></div>
+    </section>
+
+    <!-- ================= BUDGET ================= -->
+    <section class="view" id="view-budget">
+      <div class="page-head">
+        <div>
+          <div class="section-title">Budget Planner</div>
+          <div class="section-desc">Spending by category, across all trips.</div>
+        </div>
+        <select class="field" id="budgetTripSelect" style="width:auto; background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:var(--r-sm); font-size:13px;"></select>
+      </div>
+      <div class="grid" style="grid-template-columns: 1.3fr 1fr;">
+        <div class="card">
+          <div class="widget-label"><span class="dot"></span>Category breakdown</div>
+          <canvas id="budgetChart" height="220" style="margin-top:16px;"></canvas>
+        </div>
+        <div class="card">
+          <div class="widget-label"><span class="dot"></span>Totals</div>
+          <div id="budgetTotals" style="margin-top:14px;"></div>
+        </div>
+      </div>
+      <div class="stub-divider"><span class="stub-label">Log an expense</span><span class="stub-line"></span><span class="stub-dot"></span></div>
+      <div class="card" style="max-width:520px;">
+        <div class="field-row">
+          <div class="field"><label>Category</label>
+            <select id="expCategory">
+              <option>Flights</option><option>Hotels</option><option>Food</option>
+              <option>Shopping</option><option>Transport</option><option>Activities</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Amount (USD)</label><input type="number" id="expAmount" placeholder="0"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addExpense()">Add expense</button>
+      </div>
+    </section>
+
+    <!-- ================= PACKING ================= -->
+    <section class="view" id="view-packing">
+      <div class="page-head">
+        <div>
+          <div class="section-title">Smart Packing</div>
+          <div class="section-desc">Categorized, with live progress per category.</div>
+        </div>
+        <select id="packingTripSelect" style="background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:var(--r-sm); font-size:13px;"></select>
+      </div>
+      <div id="packingCategories"></div>
+    </section>
+
+    <!-- ================= CURRENCY ================= -->
+    <section class="view" id="view-currency">
+      <div class="page-head">
+        <div>
+          <div class="section-title">Currency Converter</div>
+          <div class="section-desc">Live exchange rates, updated in real time.</div>
+        </div>
+      </div>
+
+      <div class="card" style="max-width:520px;">
+        <div class="field"><label>Amount</label><input type="number" id="curAmount" value="100" oninput="runConversion()"></div>
+        <div class="converter-row">
+          <div class="field" style="flex:1;">
+            <label>From</label>
+            <select id="curFrom" onchange="runConversion()"></select>
+          </div>
+          <button class="swap-btn" onclick="swapCurrencies()" title="Swap">⇄</button>
+          <div class="field" style="flex:1;">
+            <label>To</label>
+            <select id="curTo" onchange="runConversion()"></select>
+          </div>
+        </div>
+        <div class="converter-result">
+          <div class="widget-label"><span class="dot"></span>Converted amount</div>
+          <div class="widget-value" id="curResult" style="font-size:36px;">…</div>
+          <div class="widget-sub mono" id="curRateLine"></div>
+        </div>
+      </div>
+
+      <div class="stub-divider"><span class="stub-label">For your trips · from PKR</span><span class="stub-line"></span><span class="stub-dot"></span></div>
+      <div class="grid" id="tripCurrencyGrid"></div>
+    </section>
+
+    <!-- ================= HOTELS ================= -->
+    <section class="view" id="view-hotels">
+      <div class="page-head">
+        <div>
+          <div class="section-title">Hotel Wishlist</div>
+          <div class="section-desc">Save places you're eyeing. Compare up to 3 side by side.</div>
+        </div>
+        <button class="btn btn-primary" onclick="openHotelModal()">+ Save Hotel</button>
+      </div>
+      <div class="grid" id="hotelsGrid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"></div>
+      <div id="compareTable"></div>
+    </section>
+
+    <!-- ================= WORLD MAP ================= -->
+    <section class="view" id="view-map">
+      <div class="page-head"><div><div class="section-title">World Map</div><div class="section-desc">Click anywhere to save a destination. Trips are pinned automatically.</div></div></div>
+      <div class="map-legend" id="mapLegendCounts"></div>
+      <div class="map-hint">Click any point on the map to save it as a wishlist location.</div>
+      <div id="worldMap"></div>
+    </section>
+
+    <!-- ================= JOURNAL ================= -->
+    <section class="view" id="view-journal">
+      <div class="page-head">
+        <div><div class="section-title">Travel Journal</div><div class="section-desc">Photos, memories, ratings — a private diary per trip.</div></div>
+        <select id="journalTripSelect" style="background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:var(--r-sm); font-size:13px;"></select>
+      </div>
+
+      <div class="card" style="max-width:560px; margin-bottom:24px;">
+        <div class="field"><label>Memory</label><textarea id="journalText" rows="3" placeholder="What happened today?"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Rating</label>
+            <select id="journalRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select>
+          </div>
+          <div class="field"><label>Restaurant / place (optional)</label><input type="text" id="journalRestaurant" placeholder="Le Comptoir"></div>
+        </div>
+        <div class="field">
+          <label>Photo (optional)</label>
+          <input type="file" id="journalPhotoInput" accept="image/*" onchange="handleJournalPhoto(this)">
+          <div id="journalPhotoPreview"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addJournalEntry()">Save memory</button>
+      </div>
+
+      <div class="stub-divider"><span class="stub-label">Entries</span><span class="stub-line"></span><span class="stub-dot"></span></div>
+      <div id="journalEntries"></div>
+    </section>
+
+    <!-- ================= TIMELINE ================= -->
+    <section class="view" id="view-timeline">
+      <div class="page-head">
+        <div><div class="section-title">Trip Timeline</div><div class="section-desc">Day-by-day itinerary. Drag steps to reorder within a day.</div></div>
+        <select id="timelineTripSelect" style="background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:var(--r-sm); font-size:13px;"></select>
+      </div>
+
+      <div class="card" style="max-width:620px; margin-bottom:10px;">
+        <div class="field-row">
+          <div class="field"><label>Day</label><input type="number" id="stepDay" min="1" value="1"></div>
+          <div class="field"><label>Time</label><input type="time" id="stepTime" value="09:00"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Icon</label>
+            <select id="stepIcon">
+              <option value="✈️">✈️ Flight</option><option value="🏨">🏨 Hotel</option><option value="🖼️">🖼️ Museum</option>
+              <option value="🍽️">🍽️ Dinner</option><option value="🛍️">🛍️ Shopping</option><option value="📸">📸 Photos</option><option value="📍">📍 Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Title</label><input type="text" id="stepTitle" placeholder="Eiffel Tower at sunset"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addTimelineStep()">Add step</button>
+      </div>
+
+      <div id="timelineDays"></div>
+    </section>
+
+    <!-- ================= EXPLORER ================= -->
+    <section class="view" id="view-explorer">
+      <div class="page-head">
+        <div><div class="section-title">Destination Explorer</div><div class="section-desc">Browse by country — budget estimate, best months, top sights.</div></div>
+        <input type="text" id="explorerSearch" placeholder="Search countries..." oninput="renderExplorer(this.value)" style="background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:var(--r-sm); font-size:13px; width:220px;">
+      </div>
+      <div class="grid" id="explorerGrid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));"></div>
+    </section>
+
+    <!-- ================= ANALYTICS ================= -->
+    <section class="view" id="view-analytics">
+      <div class="page-head"><div><div class="section-title">Analytics</div><div class="section-desc">Trips, countries, spend, travel days — at a glance.</div></div></div>
+      <div class="grid" id="analyticsStats" style="margin-bottom:24px;"></div>
+      <div class="card" style="margin-bottom:24px;">
+        <div class="widget-label"><span class="dot"></span>Spend per trip</div>
+        <canvas id="analyticsChart" height="180" style="margin-top:16px;"></canvas>
+      </div>
+      <div class="stub-divider"><span class="stub-label">Achievements</span><span class="stub-line"></span><span class="stub-dot"></span></div>
+      <div class="grid" id="achievementsGrid" style="grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ TRIP MODAL ============ -->
+<div class="modal-overlay" id="tripModalOverlay">
+  <div class="modal">
+    <h3 id="tripModalTitle">New Trip</h3>
+    <input type="hidden" id="tripEditId">
+    <div class="field"><label>Destination</label><input type="text" id="tripDestination" placeholder="Paris, France"></div>
+    <div class="field-row">
+      <div class="field"><label>Start date</label><input type="date" id="tripStart"></div>
+      <div class="field"><label>End date</label><input type="date" id="tripEnd"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Budget (USD)</label><input type="number" id="tripBudget" placeholder="5000"></div>
+      <div class="field"><label>Status</label>
+        <select id="tripStatus"><option value="planned">Planned</option><option value="dream">Dream</option><option value="visited">Visited</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="tripNotes" rows="3" placeholder="Flight, hotel, activities..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeTripModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTrip()">Save trip</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HOTEL MODAL ============ -->
+<div class="modal-overlay" id="hotelModalOverlay">
+  <div class="modal">
+    <h3>Save a hotel</h3>
+    <div class="field"><label>Name</label><input type="text" id="hotelName" placeholder="Hôtel Le Marais"></div>
+    <div class="field"><label>Location</label><input type="text" id="hotelLocation" placeholder="Paris, France"></div>
+    <div class="field-row">
+      <div class="field"><label>Price / night (USD)</label><input type="number" id="hotelPrice" placeholder="180"></div>
+      <div class="field"><label>Rating</label>
+        <select id="hotelRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="hotelNotes" rows="2" placeholder="Why you like it..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeHotelModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveHotel()">Save hotel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MAP PIN MODAL ============ -->
+<div class="modal-overlay" id="mapPinModal">
+  <div class="modal">
+    <h3>Save this place</h3>
+    <div class="field"><label>Name</label><input type="text" id="mapPinName" placeholder="Looking up place name…"></div>
+    <div class="field"><label>Status</label>
+      <select id="mapPinStatus">
+        <option value="dream">🔵 Dream destination</option>
+        <option value="planned">🟡 Planned</option>
+        <option value="visited">🟢 Visited</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMapPinModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMapPin()">Save pin</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/themes.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/trips.js"></script>
+<script src="js/budget.js"></script>
+<script src="js/packing.js"></script>
+<script src="js/hotels.js"></script>
+<script src="js/currency.js"></script>
+<script src="js/destinations-data.js"></script>
+<script src="js/map.js"></script>
+<script src="js/journal.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/explorer.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
